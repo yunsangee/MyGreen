@@ -18,6 +18,7 @@ app.use(express.json())
 // for Mobile Application
 app.use('/', index)
 app.use('/test', test)
+app.use('/createAccount', createAccount)
 app.use('/login', login)
 app.use('/addGreen', addGreen)
 app.use('/viewGreen', viewGreen)
