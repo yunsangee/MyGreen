@@ -1,7 +1,11 @@
 const express = require('express')
 var router = express.Router()
 
-router.post('./writeDiary', (req, res) => {
+router.get('/', (req, res) => {
+    // viewDiary code here
+})
+
+router.post('/', (req, res) => {
     // writeDiary code here
 })
 

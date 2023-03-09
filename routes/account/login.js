@@ -1,8 +1,8 @@
 const express = require('express')
 var router = express.Router()
 
-router.get('./viewGreen', (req, res) => {
-    // viewGreen code here
+router.post('/', (req, res) => {
+    // login code here
 })
 
 module.exports = router
