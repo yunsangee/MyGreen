@@ -7,11 +7,11 @@ router.use('/diary', diary)
 router.use('/memo', memo)
 
 router.post('/', (req, res) => {
-    // registerGreen code here
+    console.log(req.body.session, req.body.plant_name, req.body.profile, req.body.attirbute)
 })
 
 router.get('/', (req, res) => {
-    // viewGreen code here
+    console.log(req.body.session)
 })
 
 module.exports = router
