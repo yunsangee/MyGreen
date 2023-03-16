@@ -1,4 +1,6 @@
 const express = require('express')
+const db = require('../db/database')
+
 const diary = require("./green/diary")
 const memo = require("./green/memo")
 var router = express.Router()
