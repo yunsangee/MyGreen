@@ -1,14 +1,39 @@
-const express = require('express')
+const express = require('express');
+const db = require('../db/database')
 var router = express.Router()
 
-router.post('/test', (req, res) => {
-    const {name, memo} = req.body
-    const title = "Connection Test"
-    console.log(title)
-    const servertime = new Date().toTimeString();
-    const message = `Your name is ${name} and your memo is ${memo}`
-    const response = { title, servertime, message };
-    res.json(response);
+const testSchema = new db.Schema({
+	name: String,
+    memo: String
+});
+const testModel = db.model('good', testSchema)
+
+router.post('/', (req, res) => {
+    testModel.create({
+        name: req.body.name,
+        memo: req.body.memo
+    })
+
+    res.send("good")
+})
+
+router.get('/', (req, res) => {
+    const findDocument = async (name) => {
+        try {
+          const doc = await testModel.findOne({ name: name }).exec();
+          if (!doc) {
+            console.log("Document not found");
+          }
+
+          return doc
+        } catch (err) {
+          console.error(err);
+        }
+    };
+    findDocument(req.body.name)
+    .then(doc => {
+        res.json(doc)
+    })
 })
 
 module.exports = router
