@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
         name: req.body.name,
         memo: req.body.memo
     })
-
+    console.log(req.body.name, req.body.memo)
     res.send("good")
 })
 
@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
     const findDocument = async (name) => {
         try {
           const doc = await testModel.findOne({ name: name }).exec();
+          console.log("Get Request")
           if (!doc) {
             console.log("Document not found");
           }
@@ -32,6 +33,7 @@ router.get('/', (req, res) => {
     };
     findDocument(req.body.name)
     .then(doc => {
+        console.log("Success")
         res.json(doc)
     })
 })
