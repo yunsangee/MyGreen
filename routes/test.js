@@ -9,6 +9,7 @@ const testSchema = new db.Schema({
 const testModel = db.model('good', testSchema)
 
 router.post('/', (req, res) => {
+  console.log(`POST!: ${JSON.stringify(req.headers)} ${JSON.stringify(req.body)}`)
     testModel.create({
         name: req.body.name,
         memo: req.body.memo
@@ -31,9 +32,9 @@ router.get('/', (req, res) => {
           console.error(err);
         }
     };
+    console.log(`GET!: ${JSON.stringify(req.headers)} ${JSON.stringify(req.body)}`)
     findDocument(req.body.name)
     .then(doc => {
-        console.log("Success")
         res.json(doc)
     })
 })
