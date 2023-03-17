@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 
 const index = require('./routes/index')
 const test = require('./routes/test')
@@ -8,6 +9,7 @@ const green = require('./routes/green')
 const app = express();
 
 app.use(express.json())
+app.use(cors())
 
 // for Mobile Application
 app.use('/', index)
