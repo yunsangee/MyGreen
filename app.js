@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors')
+const body_parser = require('body-parser')
 
 const index = require('./routes/index')
 const test = require('./routes/test')
@@ -9,6 +10,8 @@ const green = require('./routes/green')
 const app = express();
 
 app.use(express.json())
+app.use(body_parser.urlencoded({ extended: false }))
+app.use(body_parser.json())
 app.use(cors())
 
 // for Mobile Application

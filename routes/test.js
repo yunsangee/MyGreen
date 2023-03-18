@@ -22,7 +22,6 @@ router.get('/', (req, res) => {
     const findDocument = async (name) => {
         try {
           const doc = await testModel.findOne({ name: name }).exec();
-          console.log("Get Request")
           if (!doc) {
             console.log("Document not found");
           }
