@@ -12,8 +12,11 @@ router.post('/', (req, res) => {
     console.log(req.body.session, req.body.plant_name, req.body.profile, req.body.attirbute)
 })
 
-router.get('/', (req, res) => {
-    console.log(req.body.session)
+router.get('/:session', (req, res) => {
+    var params = req.params;
+    console.log(params);
+   
+   res.send(params.session);
 })
 
 module.exports = router
