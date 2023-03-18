@@ -18,4 +18,24 @@ router.post('/', (req, res) => {
     res.send("good")
 })
 
+router.get('/', (req, res) => {
+    const findDocument = async (name) => {
+        try {
+          const doc = await testModel.findOne({ name: name }).exec();
+          if (!doc) {
+            console.log("Document not found");
+          }
+
+          return doc
+        } catch (err) {
+          console.error(err);
+        }
+    };
+    console.log(`GET!: ${JSON.stringify(req.headers)} ${JSON.stringify(req.body)}`)
+    findDocument(req.body.name)
+    .then(doc => {
+        res.json(doc)
+    })
+})
+
 module.exports = router
