@@ -8,7 +8,6 @@ const green = require('./routes/green')
 const app = express();
 
 app.use(express.json())
-app.use(cors())
 
 // for Mobile Application
 app.use('/', index)
