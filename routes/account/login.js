@@ -7,18 +7,20 @@ router.post('/', (req, res) => {
     const login = async (id, password) => {
         try {
           const status = await user.findOne({ 
-            id: id,
-            password: password
-         })
+            id: req.body.id,
+            password: req.body.password
+       })
          .exec();
 
-        if (!status) {
-            console.log("ID not found");
-        }
+         if (!user) throw new Error('Invalid login credentials');
+         const isPasswordValid = await user.checkPassword(req.body.password);
+         if (!isPasswordValid) throw new Error('Invalid login credentials');
+         res.status(200).send('Login successful');    
+
 
         return status
         } catch (err) {
-            console.error(err);
+            res.status(401).send(err.message)
         }
     };
     
