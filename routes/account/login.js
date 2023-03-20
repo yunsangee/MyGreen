@@ -2,37 +2,35 @@ const express = require('express')
 const user = require('../../db/models/user')
 
 var router = express.Router()
-
 router.post('/', (req, res) => {
     const login = async (id, password) => {
         try {
           const status = await user.findOne({ 
-            id: req.body.id,
-            password: req.body.password
-       })
+            id: id,
+            password: password
+         })
          .exec();
-
-         if (!user) throw new Error('Invalid login credentials');
-         const isPasswordValid = await user.checkPassword(req.body.password);
-         if (!isPasswordValid) throw new Error('Invalid login credentials');
-         res.status(200).send('Login successful');    
-
-
+        if (!status) {
+            console.log("ID not found");
+        }
         return status
         } catch (err) {
-            res.status(401).send(err.message)
+            console.error(err);
         }
     };
-    
+
     login(req.body.id, req.body.password)
+    .then(status => {
+        if (status) {
+            res.send("GOOOD!")
     .then(result => {
         if (!result) {
             res.status(406).send("Not Good")
         }
         else {
+            res.status(406)
             res.send("GOOOD!")
         }
     })
 })
-
 module.exports = router
