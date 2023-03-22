@@ -20,11 +20,16 @@ router.post('/', (req, res) => {
 
         return status
         } catch (err) {
+<<<<<<< refs/remotes/origin/ys
             res.status(401).send(err.message)
+=======
+            console.error(err)
+>>>>>>> local
         }
     };
     
     login(req.body.id, req.body.password)
+<<<<<<< refs/remotes/origin/ys
     .then(result => {
         if (!result) {
             res.status(406).send("Not Good")
@@ -36,3 +41,15 @@ router.post('/', (req, res) => {
 })
 
 module.exports = router
+=======
+    .then(status => {
+        if (status) {
+            res.send("GOOOD!")
+        } else {
+            res.status(406).send("Not Good")
+        }
+    })
+})
+
+module.exports = router
+>>>>>>> local
