@@ -1,12 +1,9 @@
 const express = require('express')
-const db = require('../../db/database')
+const user = require('../../db/models/user')
 
 var router = express.Router()
 
 router.post('/', (req, res) => {
-<<<<<<< refs/remotes/origin/ys
-    console.log(req.body.id, req.body.password, req.body.name, req.body.birth, req.body.gender, req.body.email)
-=======
     if (!req.body.id || !req.body.password || !req.body.name || !req.body.email || !req.body.birth) {
         console.log("There are spaces missing")
         return res.status(400).send("Bad Request")
@@ -26,7 +23,6 @@ router.post('/', (req, res) => {
         console.log(data)
         res.send("Account Created! " + req.body.id);
     });
->>>>>>> local
 })
 
 module.exports = router
