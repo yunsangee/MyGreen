@@ -5,12 +5,6 @@ var router = express.Router()
 
 router.post('/', (req, res) => {
 
-<<<<<<< refs/remotes/origin/ys
-    if(!id || !password || !name || !email || !birth){
-        console.log("There are spaces missing")
-    }
-=======
->>>>>>> local
     user.create({
         id: req.body.id,
         password: req.body.password,
