@@ -11,8 +11,8 @@ router.use('/memo', memo)
 router.post('/', (req, res) => {
     console.log(req.body.session, req.body.plant_name, req.body.profile, req.body.attribute)
 
-    if(!session || !plant_name || !profile || !attribute){
-        console.log("There are spaces missing")
+    if(!req.body.session || !req.body.plant_name || !req.body.profile || !req.body.attribute){
+        res.send("There are spaces missing")
     }
 })
 
