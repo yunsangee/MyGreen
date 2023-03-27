@@ -4,7 +4,7 @@ var router = express.Router()
 
 const testSchema = new db.Schema({
 	name: String,
-    memo: String
+  memo: String
 });
 const testModel = db.model('good', testSchema)
 
@@ -31,6 +31,7 @@ router.get('/', (req, res) => {
           console.error(err);
         }
     };
+
     console.log(`GET!: ${JSON.stringify(req.headers)} ${JSON.stringify(req.body)}`)
     findDocument(req.body.name)
     .then(doc => {

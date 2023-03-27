@@ -20,6 +20,7 @@ router.post('/', (req, res) => {
     console.log(req.body.id, req.body.password, req.body.name, req.body.birth, req.body.email)
     res.send("Account Created! " + req.body.id)
     }
-})
+    })
 
+    
 module.exports = router
