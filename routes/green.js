@@ -9,7 +9,11 @@ router.use('/diary', diary)
 router.use('/memo', memo)
 
 router.post('/', (req, res) => {
-    console.log(req.body.session, req.body.plant_name, req.body.profile, req.body.attirbute)
+    console.log(req.body.session, req.body.plant_name, req.body.profile, req.body.attribute)
+
+    if(!req.body.session || !req.body.plant_name || !req.body.profile || !req.body.attribute){
+        res.send("There are spaces missing")
+    }
 })
 
 router.get('/:session', (req, res) => {
