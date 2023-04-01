@@ -1,6 +1,7 @@
 const express = require('express')
 const greenModel = require('../db/models/green')
 const userModel = require('../db/models/user')
+const multer = require('multer')
 
 const diary = require("./green/diary")
 const memo = require("./green/memo")
@@ -8,6 +9,8 @@ var router = express.Router()
 
 router.use('/diary', diary)
 router.use('/memo', memo)
+
+var upload = multer({dest: 'db/'})
 
 const isValidUser = async (id) => {
     try {
@@ -58,5 +61,8 @@ router.post('/', (req, res) => {
 router.get('/:session', (req, res) => {
     
 })
+
+
+
 
 module.exports = router
