@@ -31,12 +31,16 @@ router.get('/', (req, res) => {
           console.error(err);
         }
     };
-
+    /*
     console.log(`GET!: ${JSON.stringify(req.headers)} ${JSON.stringify(req.body)}`)
     findDocument(req.body.name)
     .then(doc => {
         res.json(doc)
     })
+    */
+
+    req.session.userid = 'a'
+    res.send('hey')
 })
 
 module.exports = router
