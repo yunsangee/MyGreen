@@ -1,11 +1,11 @@
 const express = require('express')
-const user = require('../../db/models/user')
+const userModel = require('../../db/models/user')
 
 var router = express.Router()
 router.post('/', (req, res) => {
     const login = async (id, password) => {
         try {
-          const status = await user.findOne({ 
+          const status = await userModel.findOne({ 
             id: id,
             password: password
         })
@@ -27,7 +27,9 @@ router.post('/', (req, res) => {
             res.status(406).send("Not Good")
         }
         else {
-            res.send("GOOOD!")
+            req.session.userid = req.body.id
+            console.log(`session: ${JSON.stringify(req.session)}`)
+            res.send("Good")
         }
     })
 })
