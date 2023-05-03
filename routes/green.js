@@ -1,6 +1,6 @@
 const express = require('express')
 const greenModel = require('../db/models/green')
-const userModel = require('../db/models/user')
+const isValidUser = require('../validation/loginVaildation')
 const multer = require('multer')
 
 const diary = require("./green/diary")
@@ -12,25 +12,8 @@ router.use('/memo', memo)
 
 var upload = multer({dest: 'db/'})
 
-const isValidUser = async (id) => {
-    try {
-        const status = await userModel.findOne({ 
-            id: id
-        })
-        .exec();
-
-        if (!status) {
-            console.log("ID not found");
-        }
-    
-        return status
-    } catch (err) {
-        console.error(err);
-    }
-};
-
 router.post('/', (req, res) => {
-    console.log(req.session, req.body.plant_name, req.body.profile, req.body.attribute)
+    console.log(req.session.userid, req.body.plant_name, req.body.profile, req.body.attribute)
 
     if (!req.session.userid) {  // 세션이 없으면
         res.status(406).send("Unauthorized")
@@ -41,25 +24,59 @@ router.post('/', (req, res) => {
     else {
         isValidUser(req.session.userid)
         .then(isVaild => {
-            if (!isVaild){
+            if (!isVaild) {
                 console.log(`${req.session.userid} not found`)
-                res.status(406).send("No ID")
+                res.status(407).send("No ID")
                 return
             }
-            greenModel.create({
-                name: req.body.plant_name,
-                profile_image: req.body.profile,
-                attribute: req.body.attribute
-            })
+            try {
+                greenModel.create({
+                    userID: req.session.userid,
+                    name: req.body.plant_name,
+                    profile: req.body.profile,
+                    attribute: req.body.attribute
+                })
 
-            res.send("Green Created!")
-            
+                res.send("Green Created!")
+            }
+            catch (err) {
+                console.log(err)
+                res.status(408).send("Cannot Register New Green")
+            }
         })
     }
 })
 
-router.get('/:session', (req, res) => {
-    
+router.get('/', (req, res) => {
+    console.log(req.session.userid)
+
+    if (!req.session.userid) { // 세션이 없으면
+        console.log("Not Loginned")
+        res.status(406).send("Unauthorized")
+    }
+
+    else {
+        isValidUser(req.session.userid)
+        .then(isValid => {
+            if (!isValid) {
+                console.log(`${req.session.userid} not found`)
+                res.status(407).send("No ID")
+                return
+            }
+            greenModel.find({
+                userID: req.session.userid
+            })
+            //.sort({ name: 1 })
+            .then((greens) => {
+                console.log(greens)
+                res.send(greens)
+            })
+            .catch(err => {
+                console.error(err)
+                res.status(408).send("Cannot Find Your Greens")
+            })
+        })
+    }
 })
 
 
