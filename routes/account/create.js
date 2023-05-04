@@ -1,26 +1,27 @@
-const express = require('express')
-const user = require('../../db/models/user')
+const express = require('express');
+const user = require('../../db/models/user');
 
-var router = express.Router()
+var router = express.Router();
 
 router.post('/', (req, res) => {
+    const { id, password, name, email, birth } = req.body;
 
-    user.create({
-        id: req.body.id,
-        password: req.body.password,
-        name: req.body.name,
-        email: req.body.email,
-        birth: req.body.birth    
-    })
+    user.findOne({ id })
+        .then((foundUser) => {
+            if (foundUser) { // 중복 아이디 체크
+                res.send('중복된 아이디입니다.');
+            } else if (!id || !password || !name || !email || !birth) {
+                res.send('There are spaces missing');
+            } else {
+                user.create({ id, password, name, email, birth });
+                console.log(id, password, name, birth, email);
+                res.send("Account Created!" +req.body.id)
+            }
+        })
+        .catch((err) => {
+            res.status(500).send(err);
+        });
+});
 
-    if(!req.body.id || !req.body.password || !req.body.name || !req.body.email || !req.body.birth){
-        res.send("There are spaces missing")
-    }
-    else{
-    console.log(req.body.id, req.body.password, req.body.name, req.body.birth, req.body.email)
-    res.send("Account Created! " + req.body.id)
-    }
-    })
 
-    
-module.exports = router
+module.exports = router;
