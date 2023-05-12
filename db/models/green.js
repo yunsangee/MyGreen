@@ -5,18 +5,22 @@ const attributeSchema = require('./green_attribute')
 
 // required: true 인 필드는 필수 필드임. 값 없이 도큐먼트를 만들면 ValidationError를 throw함.
 const greenSchema = new db.Schema({
-    name: {
-      type: String,
-      required: true
-    },
-    profile_image: Buffer,
-    memo: memoSchema,
-    diary: [diarySchema],
-    attribute: {
-      type: attributeSchema,
-      required: false
-    }
-  });
+  userID: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  profile: Buffer,
+  memo: memoSchema,
+  diary: [diarySchema],
+  attribute: {
+    type: attributeSchema,
+    required: false
+  }
+});
 
 const green = db.model('green', greenSchema)
 
